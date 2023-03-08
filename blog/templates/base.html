@@ -1,68 +1,59 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
- <meta charset="utf-8">
- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
- <meta name="description" content="">
- <title>Mój pierwszy blog</title>
-
- <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/starter-template/">
-
- <!-- Bootstrap core CSS -->
- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-   integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
- <style>
-   body {
-     padding-top: 5rem;
-   }
- </style>
-</head>
-
-<body>
- <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-   <a class="navbar-brand" href="/">Mój blog</a>
-   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-     aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-     <span class="navbar-toggler-icon"></span>
-   </button>
-
-   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-     <ul class="navbar-nav mr-auto">
-     </ul>
-     <form class="form-inline my-2 my-lg-0">
-       <input class="form-control mr-sm-2" type="text" placeholder="Szukaj" aria-label="Szukaj">
-       <button class="btn btn-secondary my-2 my-sm-0" type="submit">Szukaj</button>
-     </form>
-   </div>
-   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-    <ul class="navbar-nav mr-auto">
-    </ul>
-    {% if session.logged_in %}
-      <form class="form-inline my-2 my-lg-0" action="{{ url_for('logout') }}" method="POST">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Wyloguj</button>
-      </form>
-    {% else %}
-      <a href="{{ url_for('login') }}" class="btn btn-secondary my-2 my-lg-0">Zaloguj</a>
-    {% endif %}
-  </div>
- </nav>
-
- <main role="main" class="container">
-
-   {% block content %}
-   {% endblock %}
-
- </main><!-- /.container -->
- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-   integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-   crossorigin="anonymous"></script>
- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-   integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-   crossorigin="anonymous"></script>
- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-   integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-   crossorigin="anonymous"></script>
-
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Bare - Start Bootstrap Template</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="static/assets/favicon.ico" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+        <!-- Responsive navbar-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="/">Mój Blog</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{url_for ('list_drafts')}}">Szkice</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('edit_entry', post_id='new_id')}}">Nowy wpis</a></li>
+                        <li class="nav-item dropdown"> 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {% if session.logged_in %}
+                <form class="form-inline" action="{{url_for ('logout')}}" method="POST">
+                     <button class="btn btn-outline-success" type="submit">Wyloguj</button>
+                </form>
+            {% else %}
+                <form class="form-inline" action="{{url_for ('login')}}" method="GET">
+                     <button class="btn btn-outline-success" type="submit">Zaloguj</button>
+                 </form>
+            {% endif %}
+        </nav>
+        {% with message = get_flashed_messages() %}
+        {% if message %}
+                <a href="/">
+                    <div class="alert alert-primary" role="alert">
+                        {{message}}
+                    </div>
+                </a>
+        {% endif %}
+        {% endwith %}
+        <!-- Page content-->
+        <div class="container">
+            {%block content%}
+            {%endblock%}
+            </div>
+        </div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="static/js/scripts.js"></script>
+    </body>
 </html>
